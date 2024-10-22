@@ -17,7 +17,7 @@ end
 Fs      = par.Fs;
 nfft    = par.nfft;
 L       = par.L;
-x       = [x' zeros(1,nfft-length(x))]';
+x       = [x(:)' zeros(1,nfft-length(x))]';
 N       = length(x);                                    %length of padded signal
 X       = fft(x,nfft);                                   %fast Fourier transform
 P       = (abs(X).^2)/N;                                %power normalized (/N)

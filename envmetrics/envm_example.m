@@ -1,4 +1,17 @@
-%
+
+%% A set of audio chunks can be batch-processed as follows:
+files = dir('*.wav');
+X={};
+for i=1:length(files)
+	[X{i},Fs] = audioread(files(i).name);
+end
+par.Fs = Fs;
+
+metrics = envm_metrics_batch(X,par,'verbose',true);
+disp(metrics);
+
+
+%% Here is how to extract metrics from a single file:
 
 [wav,Fs] = audioread('example.wav');
 t_wav = linspace(0,length(wav)-1,length(wav))/Fs;
