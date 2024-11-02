@@ -201,7 +201,7 @@ end
 EMD = struct2table(EMD);
 
 %add nan values for missing imfs
-vecf = {'pow_imf' 'mu_w' 'var_w'};
+vecf = {'pow_imf' 'mu_w' 'var_w' 'sd_w'};
 for i=1:height(EMD)
     for j=1:length(vecf)
         n_vals = length(EMD.(vecf{j}){i});
