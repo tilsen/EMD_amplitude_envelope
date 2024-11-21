@@ -14,14 +14,18 @@ if ~isfield(par,'L')
     if ~mod(par.L,2), par.L = par.L+1; end
 end
 
+if length(x)>par.nfft
+    fprintf('WARNING: signal longer than nfft\n');    
+end
+
 Fs      = par.Fs;
 nfft    = par.nfft;
 L       = par.L;
 x       = [x(:)' zeros(1,nfft-length(x))]';
 N       = length(x);                                    %length of padded signal
-X       = fft(x,nfft);                                   %fast Fourier transform
+X       = fft(x,nfft);                                  %fast Fourier transform
 P       = (abs(X).^2)/N;                                %power normalized (/N)
-psd     = 2*P(1:N/2);                                   %powsd=P(1:N/2); multiply by 2 b/c want normalized power
+psd     = 2*P(1:N/2);                            %powsd=P(1:N/2); multiply by 2 b/c want normalized power
 freq    = Fs*(0:N/2-1)/N;                               %frequencies
 
 psdsym  = [flipud(psd); psd; flipud(psd)];              %treat spectrum as symmetric about 0 and N (cf. Chatfield)
