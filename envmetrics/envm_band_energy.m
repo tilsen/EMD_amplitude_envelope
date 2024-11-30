@@ -1,4 +1,4 @@
-function [be,t] = envm_band_energy(wav,par)
+function [be,t,bp] = envm_band_energy(wav,par)
 
 %INPUTS
 % wav: the acoustic signal
@@ -8,7 +8,9 @@ function [be,t] = envm_band_energy(wav,par)
 % par.ds: downsampling factor
 
 %OUTPUTS
-%band energy (e.g. vocalic energy  amplitude envelope), unnormalized
+%be: band energy (e.g. vocalic energy  amplitude envelope), unnormalized
+%t:  time vector
+%bp: band-pass filtered signal
 
 if ~isfield(par,'bandpass_order'), par.bandpass_order = 4; end
 if ~isfield(par,'lowpass_order'), par.lowpass_order = 4; end
@@ -48,6 +50,7 @@ sig_dc          = (sig_ds - mean(sig_ds));                  %remove DC
 
 %OUTPUTS
 be = sig_dc;
+bp = sig_bp;
 t = linspace(0,length(be)-1,length(be))/(Fs/ds);
 
 end

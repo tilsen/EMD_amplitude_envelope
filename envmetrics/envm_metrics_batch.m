@@ -19,36 +19,25 @@ end
 
 p = inputParser;
 
-def_bandpass = [400 nan]; %upper band edge is determined from Fs
-def_lowpass = 10;
-def_ds = 100; %downsampling factor
-def_nfft = 2048; 
-def_sm_Hz = 1;
-def_powerratio_freq_bins = [1 3.5 10];
-def_centroid_freq_bins = [1 10];
-def_max_imf = 3;
-def_imf_freq_bounds = [0 13.16]; %frequency at which magnitude response of 4th order butterworth is -10dB
-def_tukeywin_param = 0.1;
-def_sift_relative_tol = 0.1;
-def_edge_null = 0.1;
-def_imf_freq_exclusion_prctile = 99;
+defPars = envm_default_params();
+getDefPar = @(c)defPars.value{ismember(defPars.paramName,c)};
 
 addRequired(p,'X',@(x)iscell(X));
 addRequired(p,'par',@(x)isstruct(x) & ismember('Fs',fieldnames(x)));
-addParameter(p,'bandpass',def_bandpass);
-addParameter(p,'lowpass',def_lowpass);
-addParameter(p,'ds',def_ds);
-addParameter(p,'nfft',def_nfft);
-addParameter(p,'sm_Hz',def_sm_Hz);
-addParameter(p,'powerratio_freq_bins',def_powerratio_freq_bins);
-addParameter(p,'centroid_freq_bins',def_centroid_freq_bins);
-addParameter(p,'max_imf',def_max_imf);
-addParameter(p,'tukeywin_param',def_tukeywin_param);
-addParameter(p,'sift_relative_tol',def_sift_relative_tol);
-addParameter(p,'edge_null',def_edge_null);
-addParameter(p,'imf_freq_bounds',def_imf_freq_bounds);
-addParameter(p,'imf_freq_exclusion_prctile',def_imf_freq_exclusion_prctile);
-addParameter(p,'verbose',false);
+addParameter(p,'bandpass',getDefPar('bandpass'));
+addParameter(p,'lowpass',getDefPar('lowpass'));
+addParameter(p,'ds',getDefPar('ds'));
+addParameter(p,'nfft',getDefPar('nfft'));
+addParameter(p,'sm_Hz',getDefPar('sm_Hz'));
+addParameter(p,'powerratio_freq_bins',getDefPar('powerratio_freq_bins'));
+addParameter(p,'centroid_freq_bins',getDefPar('centroid_freq_bins'));
+addParameter(p,'max_imf',getDefPar('max_imf'));
+addParameter(p,'tukeywin_param',getDefPar('tukeywin_param'));
+addParameter(p,'sift_relative_tol',getDefPar('sift_relative_tol'));
+addParameter(p,'edge_null',getDefPar('edge_null'));
+addParameter(p,'imf_freq_bounds',getDefPar('imf_freq_bounds'));
+addParameter(p,'imf_freq_exclusion_prctile',getDefPar('imf_freq_exclusion_prctile'));
+addParameter(p,'verbose',getDefPar('verbose'));
 
 parse(p,X,par,varargin{:});
 
